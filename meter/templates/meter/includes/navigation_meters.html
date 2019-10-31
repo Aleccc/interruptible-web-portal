@@ -1,0 +1,26 @@
+<!-- Heading -->
+<div class="sidebar-heading">
+    Meters
+</div>
+
+<!-- Nav Item - Meters Collapse Menu -->
+<li class="nav-item">
+    {% for meter in meters %}
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+       aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>{{ meter }}</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Display:</h6>
+            <a class="collapse-item" href="{% url 'meter:view_detail' meter.pk %}">Details</a>
+            <a class="collapse-item" href="{% url 'meter:view_graph' meter.pk %}">Graph</a>
+            <a class="collapse-item" href="cards.html">Chart</a>
+        </div>
+    </div>
+    {% endfor %}
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">

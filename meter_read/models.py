@@ -22,6 +22,9 @@ class MeterRead(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
+    class Meta:
+        ordering = ['start_date']
+
     def __str__(self):
         return '%s' % self.read_month
 
