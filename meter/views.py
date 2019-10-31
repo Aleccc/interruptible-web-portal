@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from .models import Meter
 import json
 
 
-class MeterList(ListView):
+class MeterList(LoginRequiredMixin, ListView):
     model = Meter
 
     def get_queryset(self):
