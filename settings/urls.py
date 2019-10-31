@@ -21,6 +21,7 @@ from .views import index
 urlpatterns = [
     # path('', index, name='index'),
     path('', include('meter.urls')),
+    path('customer/', include('customer.urls')),
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(template_name='login.html'),
          name='login'),
