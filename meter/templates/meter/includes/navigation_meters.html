@@ -16,7 +16,7 @@
             <h6 class="collapse-header">Display:</h6>
             <a class="collapse-item" href="{% url 'meter:view_detail' meter.pk %}">Details</a>
             <a class="collapse-item" href="{% url 'meter:view_graph' meter.pk %}">Graph</a>
-            <a class="collapse-item" href="cards.html">Chart</a>
+            <a class="dropdown-item" href="{% url 'meter:view_table' selected_meter.pk %}">Table</a>
         </div>
     </div>
     {% endfor %}

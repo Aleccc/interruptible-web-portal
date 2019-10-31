@@ -22,3 +22,12 @@ def meter_graph(request, pk):
                 'graph_dathm': json.dumps(dathm),
                 }
     return render(request, 'meter/graph.html', response)
+
+
+def meter_table(request, pk):
+    selected_meter = get_object_or_404(Meter, pk=pk)
+    meters = Meter.objects.all()
+    response = {'selected_meter': selected_meter,
+                'meter_reads': selected_meter.meter_read.all(),
+                'meters': meters}
+    return render(request, 'meter/table.html', response)

@@ -5,6 +5,8 @@
 {% include 'meter/includes/navigation_meters.html' with meters=meters %}
 {% endblock %}
 
+{% block title %}Details{% endblock %}
+
 {% block row %}
 <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
@@ -20,7 +22,7 @@
                      aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">Display:</div>
                     <a class="dropdown-item" href="{% url 'meter:view_graph' selected_meter.pk %}">Graph</a>
-                    <a class="dropdown-item" href="#">Chart</a>
+                    <a class="dropdown-item" href="{% url 'meter:view_table' selected_meter.pk %}">Table</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'meter:view_detail' selected_meter.pk %}">Details</a>
                 </div>
@@ -28,7 +30,7 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            test one two
+            <strong> Gas South Account Number </strong> : {{ selected_meter.gas_south_account_number }}
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
 {% include 'meter/includes/navigation_meters.html' with meters=meters %}
 {% endblock %}
 
-{% block title %}Graph{% endblock %}
+{% block title %}Table{% endblock %}
 
 {% block row %}
 <div class="col-xl-8 col-lg-7">
@@ -30,57 +30,55 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <div class="chart-area">
-                <canvas id="myAreaChart"></canvas>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Dekatherms</th>
+                        <th>CCF</th>
+                        <th>Date</th>
+                        <th>Read Source</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Dekatherms</th>
+                        <th>CCF</th>
+                        <th>Date</th>
+                        <th>Read Source</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for meter_read in meter_reads %}
+                    <tr>
+                        <td>{{ selected_meter }}</td>
+                        <td>{{ meter_read.usage_dekatherm }}</td>
+                        <td>{{ meter_read.usage_ccf }}</td>
+                        <td>{{ meter_read.start_date }}</td>
+                        <td>{{ meter_read.read_source }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 {% block javascript %}
 {{ block.super }}
-<script type="text/javascript">
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    var ctx = document.getElementById('myAreaChart');
-    var dates = JSON.parse('{{ graph_dates|safe }}');
-    var dathm = JSON.parse('{{ graph_dathm|safe }}');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [
-                {
-                    data: dathm,
-                    label: 'Dekatherms',
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                }
-            ],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 15,
-        bottom: 0
-      }
-    },
-        }
-    })
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
+
+<script type="text/javascript">
 
 
 </script>
