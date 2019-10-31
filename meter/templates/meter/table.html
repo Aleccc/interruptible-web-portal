@@ -5,7 +5,7 @@
 {% include 'meter/includes/navigation_meters.html' with meters=meters %}
 {% endblock %}
 
-{% block title %}Table{% endblock %}
+{% block title %}Table {% if selected_meter %} of {{ selected_meter }} {% endif %}{% endblock %}
 
 {% block row %}
 {% if selected_meter %}

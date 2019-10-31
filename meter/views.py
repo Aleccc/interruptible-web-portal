@@ -19,10 +19,10 @@ def meter_detail(request, pk):
     meters = request.user.customer.meters.all()
     if selected_meter in meters:
         response = {'selected_meter': selected_meter,
-                    'meters': meters}
+                    }
     else:
         response = {'selected_meter': None,
-                    'meters': meters}
+                    }
     return render(request, 'meter/detail.html', response)
 
 
@@ -46,7 +46,6 @@ def meter_graph(request, pk):
         monthly_dates, monthly_dathm = _group_usage(selected_meter.meter_read.all().values())
 
         response = {'selected_meter': selected_meter,
-                    'meters': meters,
                     'graph_dates': json.dumps(dates),
                     'graph_dathm': json.dumps(dathm),
                     'monthly_dates': json.dumps(monthly_dates),
@@ -54,7 +53,6 @@ def meter_graph(request, pk):
                     }
     else:
         response = {'selected_meter': None,
-                    'meters': meters,
                     'graph_dates': None,
                     'graph_dathm': None,
                     'monthly_dates': None,
@@ -70,9 +68,9 @@ def meter_table(request, pk):
     if selected_meter in meters:
         response = {'selected_meter': selected_meter,
                     'meter_reads': selected_meter.meter_read.all(),
-                    'meters': meters}
+                    }
     else:
         response = {'selected_meter': None,
                     'meter_reads': None,
-                    'meters': meters}
+                    }
     return render(request, 'meter/table.html', response)

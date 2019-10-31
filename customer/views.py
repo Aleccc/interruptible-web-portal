@@ -8,7 +8,6 @@ from customer.models import Customer
 def customer_detail(request):
     customer = request.user.customer
     customer = get_object_or_404(Customer, pk=customer.pk)
-    meters = request.user.customer.meters.all()
-    response = {'selected_meter': customer,
-                'meters': meters}
+    response = {'customer': customer,
+                }
     return render(request, 'customer/detail.html', response)

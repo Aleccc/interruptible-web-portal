@@ -1,11 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block navigation_meters %}
-{% include 'meter/includes/navigation_meters.html' with meters=meters %}
-{% endblock %}
-
-{% block title %}Graph{% endblock %}
+{% block title %}Graph {% if selected_meter %} of {{ selected_meter }} {% endif %}{% endblock %}
 
 {% block row %}
 {% if selected_meter %}
@@ -13,7 +9,7 @@
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">{{ selected_meter }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daily View</h6>
             <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -40,20 +36,20 @@
 
 <!-- Pie Chart -->
 <div class="col-xl-4 col-lg-5">
-  <div class="card shadow mb-4">
-    <!-- Card Header - Dropdown -->
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Monthly View</h6>
-      <div class="dropdown no-arrow">
-      </div>
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Monthly View</h6>
+            <div class="dropdown no-arrow">
+            </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-pie pt-4 pb-2">
+                <canvas id="myBarChart"></canvas>
+            </div>
+        </div>
     </div>
-    <!-- Card Body -->
-    <div class="card-body">
-      <div class="chart-pie pt-4 pb-2">
-        <canvas id="myBarChart"></canvas>
-      </div>
-    </div>
-  </div>
 </div>
 {% endif %}
 {% endblock %}
@@ -103,6 +99,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
               }
           })
 
+
 </script>
 
 <!-- Bar Chart Javascript-->
@@ -127,12 +124,6 @@ Chart.defaults.global.defaultFontColor = '#858796';
                     borderWidth: 3,
                 }
             ],
-        options: {
-            scales: {
-                xAxes: [{ stacked: true }],
-            }
-        }
-
   },
   options: {
     maintainAspectRatio: false,
@@ -146,6 +137,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
     },
         }
     })
+
 
 </script>
 <!--<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>-->
