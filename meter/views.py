@@ -1,8 +1,15 @@
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
 from .models import Meter
 import json
 
 
+class MeterList(ListView):
+    model = Meter
+
+
+@login_required
 def meter_detail(request, pk):
     selected_meter = get_object_or_404(Meter, pk=pk)
     meters = Meter.objects.all()
@@ -11,6 +18,7 @@ def meter_detail(request, pk):
     return render(request, 'meter/detail.html', response)
 
 
+@login_required
 def meter_graph(request, pk):
     selected_meter = get_object_or_404(Meter, pk=pk)
     meters = Meter.objects.all()
@@ -24,6 +32,7 @@ def meter_graph(request, pk):
     return render(request, 'meter/graph.html', response)
 
 
+@login_required
 def meter_table(request, pk):
     selected_meter = get_object_or_404(Meter, pk=pk)
     meters = Meter.objects.all()
