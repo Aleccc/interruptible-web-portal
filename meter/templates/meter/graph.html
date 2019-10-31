@@ -37,11 +37,30 @@
         </div>
     </div>
 </div>
+
+<!-- Pie Chart -->
+<div class="col-xl-4 col-lg-5">
+  <div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">Monthly View</h6>
+      <div class="dropdown no-arrow">
+      </div>
+    </div>
+    <!-- Card Body -->
+    <div class="card-body">
+      <div class="chart-pie pt-4 pb-2">
+        <canvas id="myBarChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
 {% endif %}
 {% endblock %}
 
 {% block javascript %}
 {{ block.super }}
+<!-- Line Chart Javascript-->
 <script type="text/javascript">
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
@@ -58,18 +77,62 @@ Chart.defaults.global.defaultFontColor = '#858796';
                     data: dathm,
                     label: 'Dekatherms',
                     lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
+                    backgroundColor: "rgba(231, 85, 37, 0.05)",
+                    borderColor: "rgba(214, 26, 105, 1)",
                     pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointBackgroundColor: "rgba(231, 85, 37, 1)",
+                    pointBorderColor: "rgba(214, 26, 105, 1)",
                     pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBackgroundColor: "rgba(231, 85, 37, 1)",
+                    pointHoverBorderColor: "rgba(214, 26, 105, 1)",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
                 }
             ],
+          },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 10,
+              right: 25,
+              top: 15,
+              bottom: 0
+            }
+          },
+              }
+          })
+
+</script>
+
+<!-- Bar Chart Javascript-->
+<script type="text/javascript">
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+    var ctx = document.getElementById('myBarChart');
+    var dates = JSON.parse('{{ monthly_dates|safe }}');
+    var dathm = JSON.parse('{{ monthly_dathm|safe }}');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [
+                {
+                    data: dathm,
+                    label: 'Dekatherms',
+                    fill: false,
+                    backgroundColor: "rgba(231, 85, 37, .05)",
+                    borderColor: "rgba(214, 26, 105, 1)",
+                    borderWidth: 3,
+                }
+            ],
+        options: {
+            scales: {
+                xAxes: [{ stacked: true }],
+            }
+        }
+
   },
   options: {
     maintainAspectRatio: false,
@@ -83,7 +146,6 @@ Chart.defaults.global.defaultFontColor = '#858796';
     },
         }
     })
-
 
 </script>
 <!--<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>-->
