@@ -38,5 +38,49 @@
 
 {% block javascript %}
 {{ block.super }}
-<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+<script type="text/javascript">
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+    var ctx = document.getElementById('myAreaChart');
+    var dates = JSON.parse('{{ graph_dates|safe }}');
+    var dathm = JSON.parse('{{ graph_dathm|safe }}');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [
+                {
+                    data: dathm,
+                    label: 'Dekatherms',
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                }
+            ],
+  },
+  options: {
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 25,
+        top: 15,
+        bottom: 0
+      }
+    },
+        }
+    })
+
+
+</script>
+<!--<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>-->
 {% endblock %}

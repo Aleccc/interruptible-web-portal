@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Meter
+import json
 
 
 def meter_detail(request, pk):
@@ -13,9 +14,11 @@ def meter_detail(request, pk):
 def meter_graph(request, pk):
     selected_meter = get_object_or_404(Meter, pk=pk)
     meters = Meter.objects.all()
+    dates = [str(x.start_date) for x in selected_meter.meter_read.all()]
+    dathm = [x.usage_dekatherm for x in selected_meter.meter_read.all()]
     response = {'selected_meter': selected_meter,
                 'meters': meters,
-                'labels': [str(x.start_date) for x in selected_meter.meter_read.all()],
-                'dathm': [x.usage_dekatherm for x in selected_meter.meter_read.all()],
+                'graph_dates': json.dumps(dates),
+                'graph_dathm': json.dumps(dathm),
                 }
     return render(request, 'meter/graph.html', response)
