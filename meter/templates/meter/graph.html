@@ -8,6 +8,7 @@
 {% block title %}Graph{% endblock %}
 
 {% block row %}
+{% if selected_meter %}
 <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
@@ -36,6 +37,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 
 {% block javascript %}
