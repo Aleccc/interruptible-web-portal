@@ -22,6 +22,10 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+    <!-- Page level templates -->
+    {% block css %}
+    {% endblock %}
+
 </head>
 
 <body id="page-top">
@@ -150,7 +154,7 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">{% block title %}Welcome{% endblock %}</h1>
-                    <!--            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+                    {% block page_button %}{% endblock %}
                 </div>
 
                 <div class="row">
@@ -237,12 +241,13 @@
 <!-- Custom scripts for all pages-->
 <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
+
+{% block javascript %}
 <!-- Page level plugins -->
 <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
 
 <!-- Page level custom scripts -->
-{% block javascript %}{% endblock %}
-<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+{% endblock %}
 
 </body>
 

@@ -1,11 +1,19 @@
 {% extends 'index.html' %}
 {% load static %}
 
+{% block css %}
+<link href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block navigation_meters %}
 {% include 'meter/includes/navigation_meters.html' with meters=meters %}
 {% endblock %}
 
 {% block title %}Table {% if selected_meter %} of {{ selected_meter }} {% endif %}{% endblock %}
+
+{% block page_button %}
+<a href="{% url 'meter:export' selected_meter.pk %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+{% endblock %}
 
 {% block row %}
 {% if selected_meter %}
@@ -31,34 +39,27 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <div class="table-responsive" style="overflow-x: hidden;">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Day</th>
                         <th>Name</th>
                         <th>Burner Tip</th>
                         <th>City Gate</th>
-                        <th>Date</th>
-                        <th>Read Source</th>
                     </tr>
                     </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Burner Tip</th>
-                        <th>City Gate</th>
-                        <th>Date</th>
-                        <th>Read Source</th>
-                    </tr>
-                    </tfoot>
                     <tbody>
                     {% for meter_read in meter_reads %}
                     <tr>
+                        <td>{{ meter_read.start_date.year }}</td>
+                        <td>{{ meter_read.start_date.month }}</td>
+                        <td>{{ meter_read.start_date.day }}</td>
                         <td>{{ selected_meter }}</td>
                         <td>{{ meter_read.burner_tip_dekatherm }}</td>
                         <td>{{ meter_read.city_gate_dekatherm }}</td>
-                        <td>{{ meter_read.start_date }}</td>
-                        <td>{{ meter_read.read_source }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -73,14 +74,20 @@
 {% block javascript %}
 {{ block.super }}
 <!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
-<!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
+
 
 <script type="text/javascript">
-
+$(document).ready(function() {
+  $('#dataTable').DataTable({
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+<!--        "scrollY":        "200px",-->
+<!--        "scrollCollapse": true,-->
+<!--        "paging":         false-->
+    });
+});
 
 </script>
 <!--<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>-->

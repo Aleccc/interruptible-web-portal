@@ -1,9 +1,11 @@
+import json
+import csv
+from django.http import StreamingHttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from .models import Meter
-import json
 
 
 class MeterList(LoginRequiredMixin, ListView):
@@ -67,10 +69,38 @@ def meter_table(request, pk):
     meters = request.user.customer.meters.all()
     if selected_meter in meters:
         response = {'selected_meter': selected_meter,
-                    'meter_reads': selected_meter.meter_read.all(),
+                    'meter_reads': selected_meter.meter_read.all().order_by('-start_date'),
                     }
     else:
         response = {'selected_meter': None,
                     'meter_reads': None,
                     }
     return render(request, 'meter/table.html', response)
+
+
+class Echo:
+    """An object that implements just the write method of the file-like
+    interface.
+    """
+
+    def write(self, value):
+        """Write the value by returning it, instead of storing in a buffer."""
+        return value
+
+
+@login_required
+def export_csv(request, pk):
+    selected_meter = get_object_or_404(Meter, pk=pk)
+    meters = request.user.customer.meters.all()
+    if selected_meter in meters:
+        fieldnames = {'start_date': 'start_date', 'city_gate_dekatherm': 'city_gate_dekatherm'}
+        meter_reads = list(selected_meter.meter_read.all().values(*fieldnames.keys()))
+        meter_reads.insert(0, fieldnames)
+        pseudo_buffer = Echo()
+        writer = csv.DictWriter(pseudo_buffer, fieldnames=fieldnames.keys())
+        response = StreamingHttpResponse((writer.writerow(row) for row in meter_reads),
+                                         content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename="meter_reads.csv"'
+    else:
+        response = None
+    return response
