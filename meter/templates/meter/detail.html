@@ -27,7 +27,11 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <strong> Gas South Account Number </strong> : {{ selected_meter.gas_south_account_number }}
+            <p><strong>Gas South Account Number</strong> : {{ selected_meter.gas_south_account_number }}</p>
+            <p><strong>AGL Account Number</strong> : {{ selected_meter.ldc_account_number }}</p>
+            <p><strong>Premise Number</strong> : {{ selected_meter.premise_number }}</p>
+            <p><strong>Pool Group</strong> : {{ selected_meter.location }}</p>
+            <p><strong>County</strong> : {{ selected_meter.county }}</p>
         </div>
     </div>
 </div>

@@ -32,7 +32,7 @@ def _group_usage(queryset):
     dathm = []
     for key, group in itertools.groupby(queryset, lambda item: item['read_month']):
         dates.append(key)
-        dathm.append(sum([item['usage_dekatherm'] for item in group]))
+        dathm.append(sum([item['city_gate_dekatherm'] for item in group]))
     return dates, dathm
 
 
@@ -42,7 +42,7 @@ def meter_graph(request, pk):
     meters = request.user.customer.meters.all()
     if selected_meter in meters:
         dates = [str(x.start_date) for x in selected_meter.meter_read.all()]
-        dathm = [x.usage_dekatherm for x in selected_meter.meter_read.all()]
+        dathm = [x.city_gate_dekatherm for x in selected_meter.meter_read.all()]
         monthly_dates, monthly_dathm = _group_usage(selected_meter.meter_read.all().values())
 
         response = {'selected_meter': selected_meter,

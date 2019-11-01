@@ -7,12 +7,12 @@ from django.utils.translation import gettext_lazy as _
 
 class MeterRead(models.Model):
     read_month = models.CharField(max_length=64, blank=True)
-    usage_ccf = models.FloatField()
-    usage_dekatherm = models.FloatField()
+    city_gate_dekatherm = models.FloatField()
+    burner_tip_dekatherm = models.FloatField()
     start_date = models.DateField()
     end_date = models.DateField()
-    design_day_mcf = models.FloatField()
-    design_day_dekatherm = models.FloatField()
+    design_day_mcf = models.FloatField(blank=True, null=True)
+    design_day_dekatherm = models.FloatField(blank=True, null=True)
     read_source = models.CharField(max_length=64, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

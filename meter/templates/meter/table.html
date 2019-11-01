@@ -36,8 +36,8 @@
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Dekatherms</th>
-                        <th>CCF</th>
+                        <th>Burner Tip</th>
+                        <th>City Gate</th>
                         <th>Date</th>
                         <th>Read Source</th>
                     </tr>
@@ -45,8 +45,8 @@
                     <tfoot>
                     <tr>
                         <th>Name</th>
-                        <th>Dekatherms</th>
-                        <th>CCF</th>
+                        <th>Burner Tip</th>
+                        <th>City Gate</th>
                         <th>Date</th>
                         <th>Read Source</th>
                     </tr>
@@ -55,8 +55,8 @@
                     {% for meter_read in meter_reads %}
                     <tr>
                         <td>{{ selected_meter }}</td>
-                        <td>{{ meter_read.usage_dekatherm }}</td>
-                        <td>{{ meter_read.usage_ccf }}</td>
+                        <td>{{ meter_read.burner_tip_dekatherm }}</td>
+                        <td>{{ meter_read.city_gate_dekatherm }}</td>
                         <td>{{ meter_read.start_date }}</td>
                         <td>{{ meter_read.read_source }}</td>
                     </tr>
