@@ -92,13 +92,13 @@ class Echo:
 @login_required
 def export_csv(request, pk):
     selected_meter = get_object_or_404(Meter, pk=pk)
-    meter_name = str(selected_meter.meter)
+    account = str(selected_meter.gas_south_account_number)
     meters = request.user.customer.meters.all()
     if selected_meter in meters:
-        fieldnames = ['start_date', 'city_gate_dekatherm', 'name']  # 'meter_name not a real field
+        fieldnames = ['start_date', 'city_gate_dekatherm', 'account_number']  # 'account' not a field of meter_read
         meter_reads = list(selected_meter.meter_read.all().values(*fieldnames[:2]))
         for meter in meter_reads:
-            meter['name'] = meter_name
+            meter['gas_south_account_number'] = account
         meter_reads.insert(0, dict(zip(fieldnames, fieldnames)))
         pseudo_buffer = Echo()
         writer = csv.DictWriter(pseudo_buffer, fieldnames=fieldnames)
