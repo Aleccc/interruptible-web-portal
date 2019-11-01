@@ -98,7 +98,7 @@ def export_csv(request, pk):
         fieldnames = ['start_date', 'city_gate_dekatherm', 'account_number']  # 'account' not a field of meter_read
         meter_reads = list(selected_meter.meter_read.all().values(*fieldnames[:2]))
         for meter in meter_reads:
-            meter['gas_south_account_number'] = account
+            meter[fieldnames[-1]] = account
         meter_reads.insert(0, dict(zip(fieldnames, fieldnames)))
         pseudo_buffer = Echo()
         writer = csv.DictWriter(pseudo_buffer, fieldnames=fieldnames)
