@@ -55,7 +55,7 @@
                     {% for meter_read in meter_reads %}
                     <tr>
                         <td>{{ meter_read.start_date.year }}</td>
-                        <td>{{ meter_read.start_date.month }}</td>
+                        <td>{{ meter_read.start_date.month }} - {{ meter_read.start_date | date:'F' }}</td>
                         <td>{{ meter_read.start_date.day }}</td>
                         <td>{{ selected_meter }}</td>
                         <td>{{ meter_read.burner_tip_dekatherm }}</td>
