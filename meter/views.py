@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
+from django.http import Http404
 from .models import Meter
 
 
@@ -91,16 +92,19 @@ class Echo:
 @login_required
 def export_csv(request, pk):
     selected_meter = get_object_or_404(Meter, pk=pk)
+    meter_name = str(selected_meter.meter)
     meters = request.user.customer.meters.all()
     if selected_meter in meters:
-        fieldnames = {'start_date': 'start_date', 'city_gate_dekatherm': 'city_gate_dekatherm'}
-        meter_reads = list(selected_meter.meter_read.all().values(*fieldnames.keys()))
-        meter_reads.insert(0, fieldnames)
+        fieldnames = ['start_date', 'city_gate_dekatherm', 'name']  # 'meter_name not a real field
+        meter_reads = list(selected_meter.meter_read.all().values(*fieldnames[:2]))
+        for meter in meter_reads:
+            meter['name'] = meter_name
+        meter_reads.insert(0, dict(zip(fieldnames, fieldnames)))
         pseudo_buffer = Echo()
-        writer = csv.DictWriter(pseudo_buffer, fieldnames=fieldnames.keys())
+        writer = csv.DictWriter(pseudo_buffer, fieldnames=fieldnames)
         response = StreamingHttpResponse((writer.writerow(row) for row in meter_reads),
                                          content_type="text/csv")
         response['Content-Disposition'] = 'attachment; filename="meter_reads.csv"'
     else:
-        response = None
+        raise Http404
     return response
