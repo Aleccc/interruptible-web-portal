@@ -3,4 +3,5 @@ Django==2.2.6
 pytz==2019.3
 six==1.12.0
 sqlparse==0.3.0
+whitenoise==4.1.4
 wincertstore==0.2
