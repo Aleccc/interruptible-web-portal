@@ -55,7 +55,10 @@
 {% endblock %}
 
 {% block javascript %}
-{{ block.super }}
+<!-- Page level plugins -->
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
 <!-- Line Chart Javascript-->
 <script type="text/javascript">
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
