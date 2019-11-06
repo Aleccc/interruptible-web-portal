@@ -8,7 +8,7 @@ from .models import MeterRead
 class MeterReadResource(ModelResource):
     content_object = GenericForeignKeyField({
         Meter: MeterResource,
-    }, 'content_type')
+    }, 'content_object')
 
     class Meta:
         queryset = MeterRead.objects.all()
