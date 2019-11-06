@@ -16,12 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
+from tastypie.api import Api
+from meter_read.api import MeterReadResource, MeterResource
 from .views import index
+
+v1_api = Api(api_name='v1')
+v1_api.register(MeterResource())
+v1_api.register(MeterReadResource())
 
 urlpatterns = [
     path('', index, name='index'),
     path('meter/', include('meter.urls')),
     path('customer/', include('customer.urls')),
+    path('api/', include(v1_api.urls)),
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(template_name='login.html'),
          name='login'),
