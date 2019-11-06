@@ -1,5 +1,6 @@
 from tastypie.resources import ModelResource
 from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
+from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
 from meter.models import Meter
 from meter.api import MeterResource
@@ -14,4 +15,5 @@ class MeterReadResource(ModelResource):
     class Meta:
         queryset = MeterRead.objects.all()
         allowed_methods = ['get', 'post', 'put']
+        authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
