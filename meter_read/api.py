@@ -1,9 +1,10 @@
-from tastypie.resources import ModelResource
-from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
-from meter.models import Meter
+from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
+from tastypie.resources import ModelResource
+
 from meter.api import MeterResource
+from meter.models import Meter
 from .models import MeterRead
 
 
