@@ -12,3 +12,4 @@ class MeterReadResource(ModelResource):
 
     class Meta:
         queryset = MeterRead.objects.all()
+        allowed_methods = ['get']
