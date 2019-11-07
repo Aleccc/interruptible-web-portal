@@ -39,14 +39,13 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <div class="table">
+            <div class="table-responsive-sm">
                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
                         <th>Year</th>
                         <th>Month</th>
                         <th>Day</th>
-                        <th>Name</th>
                         <th>Burner Tip</th>
                         <th>City Gate</th>
                     </tr>
@@ -57,7 +56,6 @@
                         <td>{{ meter_read.start_date.year }}</td>
                         <td>{{ meter_read.start_date.month }} - {{ meter_read.start_date | date:'F' }}</td>
                         <td>{{ meter_read.start_date.day }}</td>
-                        <td>{{ selected_meter }}</td>
                         <td>{{ meter_read.burner_tip_dekatherm }}</td>
                         <td>{{ meter_read.city_gate_dekatherm }}</td>
                     </tr>
