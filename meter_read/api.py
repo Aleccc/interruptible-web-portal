@@ -8,6 +8,18 @@ from meter.models import Meter
 from .models import MeterRead
 
 
+class AnonymousGetAuthentication(BasicAuthentication):
+    """ No auth on post / for user creation """
+
+    def is_authenticated(self, request, **kwargs):
+        """ If POST, don't check auth, otherwise fall back to parent """
+
+        if request.method == "GET":
+            return True
+        else:
+            return super(AnonymousPostAuthentication, self).is_authenticated(request, **kwargs)
+
+
 class MeterReadResource(ModelResource):
     content_object = GenericForeignKeyField({
         Meter: MeterResource,
@@ -15,6 +27,6 @@ class MeterReadResource(ModelResource):
 
     class Meta:
         queryset = MeterRead.objects.all()
-        allowed_methods = ['get', 'post', 'put']
-        authentication = BasicAuthentication()
+        allowed_methods = ['get', 'post']
+        authentication = AnonymousGetAuthentication()
         authorization = DjangoAuthorization()
