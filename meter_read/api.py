@@ -8,16 +8,16 @@ from meter.models import Meter
 from .models import MeterRead
 
 
-class AnonymousGetAuthentication(BasicAuthentication):
-    """ No auth on get requests, BasicAuthentication for all else """
+# class AnonymousGetAuthentication(BasicAuthentication):
+#     """ No auth on get requests, BasicAuthentication for all else """
 
-    def is_authenticated(self, request, **kwargs):
-        """ If POST, don't check auth, otherwise fall back to parent """
+#     def is_authenticated(self, request, **kwargs):
+#         """ If POST, don't check auth, otherwise fall back to parent """
 
-        if request.method == "GET":
-            return True
-        else:
-            return super(AnonymousGetAuthentication, self).is_authenticated(request, **kwargs)
+#         if request.method == "GET":
+#             return True
+#         else:
+#             return super(AnonymousGetAuthentication, self).is_authenticated(request, **kwargs)
 
 
 class MeterReadResource(ModelResource):
@@ -28,5 +28,5 @@ class MeterReadResource(ModelResource):
     class Meta:
         queryset = MeterRead.objects.all()
         allowed_methods = ['get', 'post']
-        authentication = AnonymousGetAuthentication()
-#         authorization = DjangoAuthorization()
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
