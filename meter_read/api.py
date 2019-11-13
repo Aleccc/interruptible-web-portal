@@ -17,7 +17,7 @@ class AnonymousGetAuthentication(BasicAuthentication):
         if request.method == "GET":
             return True
         else:
-            return super(AnonymousPostAuthentication, self).is_authenticated(request, **kwargs)
+            return super(AnonymousGetAuthentication, self).is_authenticated(request, **kwargs)
 
 
 class MeterReadResource(ModelResource):
