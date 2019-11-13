@@ -27,6 +27,6 @@ class MeterReadResource(ModelResource):
 
     class Meta:
         queryset = MeterRead.objects.all()
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'patch']
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
