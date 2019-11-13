@@ -20,14 +20,6 @@ class AnonymousGetAuthentication(BasicAuthentication):
             return super(AnonymousGetAuthentication, self).is_authenticated(request, **kwargs)
 
 
-class AnonymousGetAuthorization(DjangoAuthorization):
-    def is_authorized(self, request, object=None):
-        if request.method == "GET":
-            return True
-        else:
-            return super(AnonymousGetAuthorization, self).is_authorized(request, **kwargs)
-
-
 class MeterReadResource(ModelResource):
     content_object = GenericForeignKeyField({
         Meter: MeterResource,
@@ -37,4 +29,4 @@ class MeterReadResource(ModelResource):
         queryset = MeterRead.objects.all()
         allowed_methods = ['get', 'post']
         authentication = AnonymousGetAuthentication()
-        authorization = AnonymousGetAuthorization()
+#         authorization = DjangoAuthorization()
