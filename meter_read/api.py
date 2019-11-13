@@ -9,7 +9,7 @@ from .models import MeterRead
 
 
 class AnonymousGetAuthentication(BasicAuthentication):
-    """ No auth on post / for user creation """
+    """ No auth on get requests, BasicAuthentication for all else """
 
     def is_authenticated(self, request, **kwargs):
         """ If POST, don't check auth, otherwise fall back to parent """
